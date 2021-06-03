@@ -1,5 +1,7 @@
 package com.example.recyclerviewapidatabindingpractice.viewModel
 
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,15 +15,19 @@ import kotlinx.coroutines.launch
 class CharactersViewModel : ViewModel() {
 
     var characters: MutableList<Character> = mutableListOf()
+//    var filteredCharacters: MutableList<Character> = mutableListOf()
     var liveCharacters: MutableLiveData<MutableList<Character>> = MutableLiveData()
     var images: Array<CharacterImage?> = arrayOf()
     var liveImages: MutableLiveData<Array<CharacterImage?>> = MutableLiveData()
     private val characterRepo: CharactersRepository
     private val characterImageRepo: CharacterImageRepository
 
+    var filteringWord: MutableLiveData<String> = MutableLiveData()
+
     init {
 //        liveCharacters.value = mutableListOf()
 //        images.value = arrayOf()
+        filteringWord.value = ""
         liveCharacters = MutableLiveData(characters)
         liveImages = MutableLiveData(images)
         characterRepo = CharactersRepository()
@@ -57,12 +63,36 @@ class CharactersViewModel : ViewModel() {
         }
     }
 
-//    fun getCharacter(index: Int) = liveCharacters.value?.get(index)
+    fun createTextChangeListener(): TextWatcher {
+        return object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                liveCharacters.value = filterCharacters()
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        }
+    }
+
+    private fun filterCharacters(): MutableList<Character> {
+        val filter = filteringWord.value ?: return characters
+        if (filter == "") return characters
+
+        val filteredList = mutableListOf<Character>()
+
+        for (character in characters) {
+            if (character.name.toUpperCase().contains(filter.toUpperCase())) {
+                filteredList.add(character)
+            }
+        }
+        return filteredList
+    }
+
+    fun getCharacter(index: Int) = liveCharacters.value?.get(index)
 //    fun getImage(index: Int) = images[index]
-        fun getCharacter(index: Int) = characters[index]
+//    fun getCharacter(index: Int) = characters[index]
 //    fun getImage(index: Int) = images[index]
 
 
-//    fun getCharacterCount() = liveCharacters.value?.size
-fun getCharacterCount() = characters.size
+    fun getCharacterCount() = liveCharacters.value?.size ?: 0
+//    fun getCharacterCount() = characters.size
 }

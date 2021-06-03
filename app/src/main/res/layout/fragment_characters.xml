@@ -9,12 +9,23 @@
 
     <LinearLayout
         android:orientation="vertical"
+        android:background="#f0f8ff"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment" />
+            android:text="Search Character!" />
+
+        <EditText
+            android:id="@+id/filtering_edit"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:inputType="text"
+            android:maxLines="1"
+            android:text="@={view_model.filteringWord}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/characters_recycler_view"

@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class CharacterDetailViewModel : ViewModel() {
     var characterId: String? = null
     private var characterDetail: CharacterDetail? = null
-    private var liveCharacterDetail: MutableLiveData<CharacterDetail?> = MutableLiveData()
+    var liveCharacterDetail: MutableLiveData<CharacterDetail?> = MutableLiveData()
 
     private val characterDetailRepo: CharacterDetailRepository
     private val characterImageRepo: CharacterImageRepository

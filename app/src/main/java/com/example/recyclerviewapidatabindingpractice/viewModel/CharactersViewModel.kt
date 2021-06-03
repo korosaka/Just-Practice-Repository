@@ -24,6 +24,8 @@ class CharactersViewModel : ViewModel() {
 
     var filteringWord: MutableLiveData<String> = MutableLiveData()
 
+    var clickLister: ClickItemListener? = null
+
     init {
 //        liveCharacters.value = mutableListOf()
 //        images.value = arrayOf()
@@ -95,4 +97,12 @@ class CharactersViewModel : ViewModel() {
 
     fun getCharacterCount() = liveCharacters.value?.size ?: 0
 //    fun getCharacterCount() = characters.size
+
+    fun onClickCharacter(character: Character) {
+        clickLister?.onClickItem(character)
+    }
+}
+
+interface ClickItemListener {
+    fun onClickItem(item: Character)
 }

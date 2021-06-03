@@ -34,7 +34,7 @@ class CharactersRepository {
         val characterList: MutableList<Character> = mutableListOf()
 
         for (characterEntity in entity.results) {
-            val character = Character(characterEntity.name, characterEntity.image, null)
+            val character = Character(characterEntity.id, characterEntity.name, characterEntity.image, null)
             characterList.add(character)
         }
 

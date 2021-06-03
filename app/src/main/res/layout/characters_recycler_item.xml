@@ -11,12 +11,16 @@
 <!--            name="character_image"-->
 <!--            type="com.example.recyclerviewapidatabindingpractice.model.CharacterImage"-->
 <!--            />-->
+        <variable
+            name="view_model"
+            type="com.example.recyclerviewapidatabindingpractice.viewModel.CharactersViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#7fbfff"
+        android:onClick="@{() -> view_model.onClickCharacter(character)}"
         android:orientation="horizontal">
 
         <!--        ref: https://engawapg.net/android/66/-->

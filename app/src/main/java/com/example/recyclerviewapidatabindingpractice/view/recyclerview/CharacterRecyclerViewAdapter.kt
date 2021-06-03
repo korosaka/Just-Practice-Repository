@@ -18,6 +18,7 @@ class CharacterRecyclerViewAdapter(private val viewModel: CharactersViewModel,
 
     override fun onBindViewHolder(holder: CharacterRecyclerViewHolder, position: Int) {
         holder.binding.character = viewModel.getCharacter(position)
+        holder.binding.viewModel = viewModel
 //        holder.binding.characterImage = viewModel.getImage(position)
         holder.binding.lifecycleOwner = parentLifecycleOwner
         holder.binding.executePendingBindings()

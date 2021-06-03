@@ -17,8 +17,8 @@ class CharactersViewModel : ViewModel() {
     var characters: MutableList<Character> = mutableListOf()
 //    var filteredCharacters: MutableList<Character> = mutableListOf()
     var liveCharacters: MutableLiveData<MutableList<Character>> = MutableLiveData()
-    var images: Array<CharacterImage?> = arrayOf()
-    var liveImages: MutableLiveData<Array<CharacterImage?>> = MutableLiveData()
+//    var images: Array<CharacterImage?> = arrayOf()
+//    var liveImages: MutableLiveData<Array<CharacterImage?>> = MutableLiveData()
     private val characterRepo: CharactersRepository
     private val characterImageRepo: CharacterImageRepository
 
@@ -31,7 +31,7 @@ class CharactersViewModel : ViewModel() {
 //        images.value = arrayOf()
         filteringWord.value = ""
         liveCharacters = MutableLiveData(characters)
-        liveImages = MutableLiveData(images)
+//        liveImages = MutableLiveData(images)
         characterRepo = CharactersRepository()
         characterImageRepo = CharacterImageRepository()
     }

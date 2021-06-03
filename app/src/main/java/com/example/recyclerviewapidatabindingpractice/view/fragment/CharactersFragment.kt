@@ -1,14 +1,11 @@
 package com.example.recyclerviewapidatabindingpractice.view.fragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
@@ -16,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recyclerviewapidatabindingpractice.R
 import com.example.recyclerviewapidatabindingpractice.databinding.FragmentCharactersBinding
 import com.example.recyclerviewapidatabindingpractice.model.Character
-import com.example.recyclerviewapidatabindingpractice.repository.characters.CharacterDetail
 import com.example.recyclerviewapidatabindingpractice.view.activity.CharacterDetailActivity
 import com.example.recyclerviewapidatabindingpractice.view.recyclerview.CharacterRecyclerViewAdapter
 import com.example.recyclerviewapidatabindingpractice.viewModel.CharactersViewModel
@@ -66,10 +62,10 @@ class CharactersFragment : Fragment() {
             recyclerAdapter.notifyDataSetChanged()
         }
 
-        viewModel.liveImages.observe(viewLifecycleOwner) {
-            println("test: image observe")
-            recyclerAdapter.notifyDataSetChanged()
-        }
+//        viewModel.liveImages.observe(viewLifecycleOwner) {
+//            println("test: image observe")
+//            recyclerAdapter.notifyDataSetChanged()
+//        }
 
         viewModel.clickLister = createClickListener()
 

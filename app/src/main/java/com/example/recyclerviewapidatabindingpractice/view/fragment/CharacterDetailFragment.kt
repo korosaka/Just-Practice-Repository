@@ -49,7 +49,7 @@ class CharacterDetailFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(characterId: String) =
+        fun newInstance(characterId: String?) =
             CharacterDetailFragment().apply {
                 arguments = Bundle().apply {
                     putString("character_id", characterId)

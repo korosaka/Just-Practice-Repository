@@ -69,7 +69,7 @@ class CharactersFragment : Fragment() {
 
         viewModel.clickLister = createClickListener()
 
-        viewModel.fetchCharacters()
+//        viewModel.fetchCharacters()
     }
 
 //    override fun onStart() {

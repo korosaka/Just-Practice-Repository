@@ -31,9 +31,11 @@ class CharactersViewModel : ViewModel() {
         characterRepo = CharactersRepository()
         characterImageRepo = CharacterImageRepository()
         charactersURLRepository = CharactersURLRepository()
+
+        fetchCharacters()
     }
 
-    fun fetchCharacters() {
+    private fun fetchCharacters() {
         viewModelScope.launch(Dispatchers.IO) {
 
             // fetching characters API URL

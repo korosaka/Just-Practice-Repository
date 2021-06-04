@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recyclerviewapidatabindingpractice.model.Character
+import com.example.recyclerviewapidatabindingpractice.model.Common
 import com.example.recyclerviewapidatabindingpractice.repository.characters.CharacterImageRepository
 import com.example.recyclerviewapidatabindingpractice.repository.characters.CharactersRepository
 import com.example.recyclerviewapidatabindingpractice.repository.characters.CharactersURLRepository
@@ -39,6 +40,7 @@ class CharactersViewModel : ViewModel() {
             val charactersURLStr =
                 charactersURLRepository.fetchCharactersURL()
                     ?: return@launch //TODO error handling
+            Common.charactersAPIUrlStr = charactersURLStr // to use in other Activity
             println("test: url: $charactersURLStr")
 
 

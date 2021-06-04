@@ -1,6 +1,7 @@
 package com.example.recyclerviewapidatabindingpractice.repository.characters
 
 import com.example.recyclerviewapidatabindingpractice.model.API
+import com.example.recyclerviewapidatabindingpractice.model.Common
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,7 +27,7 @@ class CharactersURLRepository {
 
     private fun restClient(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://rickandmortyapi.com/")
+            .baseUrl(Common.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

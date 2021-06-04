@@ -15,10 +15,11 @@ interface API {
     @GET
     fun fetchCharacters(@Url charactersUrlStr: String): Call<CharactersEntity>
 
-
     // https://rickandmortyapi.com/api/character/15
-    @GET("character/{id}")
-    fun fetchCharacterDetail(@Path("id") characterId: String): Call<CharacterDetailEntity>
+//    @GET("character/{id}")
+//    fun fetchCharacterDetail(@Path("id") characterId: String): Call<CharacterDetailEntity>
+    @GET
+    fun fetchCharacterDetail(@Url charactersUrlStr: String): Call<CharacterDetailEntity>
 
     // https://rickandmortyapi.com/api
     @GET("api")

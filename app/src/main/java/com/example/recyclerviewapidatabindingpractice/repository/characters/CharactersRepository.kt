@@ -2,6 +2,7 @@ package com.example.recyclerviewapidatabindingpractice.repository.characters
 
 import com.example.recyclerviewapidatabindingpractice.model.API
 import com.example.recyclerviewapidatabindingpractice.model.Character
+import com.example.recyclerviewapidatabindingpractice.model.Common
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -25,7 +26,7 @@ class CharactersRepository {
 //                return@withContext extractCharacters(response.body()!!)
             return extractCharacters(response.body()!!)
         } catch (e: Exception) {
-            println("test: $e")
+            println("test CharactersRepository: $e")
             null
         }
 //        }
@@ -52,7 +53,8 @@ class CharactersRepository {
 
     private fun restClient(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://rickandmortyapi.com/api/")
+//            .baseUrl("https://rickandmortyapi.com/api/")
+            .baseUrl(Common.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

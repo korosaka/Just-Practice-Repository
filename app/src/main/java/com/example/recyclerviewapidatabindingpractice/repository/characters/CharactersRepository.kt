@@ -13,7 +13,7 @@ class CharactersRepository {
     //    /**
 //     * suspend is must be used because there is withContext within it
 //     */
-    fun fetchCharacters(): MutableList<Character>? {
+    fun fetchCharacters(urlStr: String): MutableList<Character>? {
 
 //        /**
 //         * use withContext(Dispatchers.IO) so that the API task is always done on Non-Main thread
@@ -21,7 +21,7 @@ class CharactersRepository {
 //        return withContext(Dispatchers.IO) {
 //            return@withContext try {
         return try {
-            val response = executeAPI()
+            val response = executeAPI(urlStr)
 //                return@withContext extractCharacters(response.body()!!)
             return extractCharacters(response.body()!!)
         } catch (e: Exception) {
@@ -45,9 +45,9 @@ class CharactersRepository {
 
     }
 
-    private fun executeAPI(): Response<CharactersEntity> {
+    private fun executeAPI(urlStr: String): Response<CharactersEntity> {
         val service = restClient().create(API::class.java)
-        return service.fetchCharacters().execute()
+        return service.fetchCharacters(urlStr).execute()
     }
 
     private fun restClient(): Retrofit {

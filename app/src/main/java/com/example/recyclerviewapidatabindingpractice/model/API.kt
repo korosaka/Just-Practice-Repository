@@ -6,11 +6,15 @@ import com.example.recyclerviewapidatabindingpractice.repository.characters.Char
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Url
 
 interface API {
     // https://rickandmortyapi.com/api/character
-    @GET("character")
-    fun fetchCharacters(): Call<CharactersEntity>
+//    @GET("character")
+//    fun fetchCharacters(): Call<CharactersEntity>
+    @GET
+    fun fetchCharacters(@Url charactersUrlStr: String): Call<CharactersEntity>
+
 
     // https://rickandmortyapi.com/api/character/15
     @GET("character/{id}")

@@ -43,7 +43,7 @@ class CharactersViewModel : ViewModel() {
 
 
             // fetching characters
-            val fetchedData = characterRepo.fetchCharacters() ?: return@launch //TODO error handling
+            val fetchedData = characterRepo.fetchCharacters(charactersURLStr) ?: return@launch //TODO error handling
             characters = fetchedData
             viewModelScope.launch(Dispatchers.Main) {
                 liveCharacters.value = characters

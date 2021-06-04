@@ -6,57 +6,57 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recyclerviewapidatabindingpractice.model.Character
-import com.example.recyclerviewapidatabindingpractice.model.CharacterImage
 import com.example.recyclerviewapidatabindingpractice.repository.characters.CharacterImageRepository
 import com.example.recyclerviewapidatabindingpractice.repository.characters.CharactersRepository
+import com.example.recyclerviewapidatabindingpractice.repository.characters.CharactersURLRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CharactersViewModel : ViewModel() {
 
-    var characters: MutableList<Character> = mutableListOf()
-//    var filteredCharacters: MutableList<Character> = mutableListOf()
+    private var characters: MutableList<Character> = mutableListOf()
     var liveCharacters: MutableLiveData<MutableList<Character>> = MutableLiveData()
-//    var images: Array<CharacterImage?> = arrayOf()
-//    var liveImages: MutableLiveData<Array<CharacterImage?>> = MutableLiveData()
+
     private val characterRepo: CharactersRepository
     private val characterImageRepo: CharacterImageRepository
+    private val charactersURLRepository: CharactersURLRepository
 
     var filteringWord: MutableLiveData<String> = MutableLiveData()
-
     var clickLister: ClickItemListener? = null
 
     init {
-//        liveCharacters.value = mutableListOf()
-//        images.value = arrayOf()
         filteringWord.value = ""
         liveCharacters = MutableLiveData(characters)
-//        liveImages = MutableLiveData(images)
         characterRepo = CharactersRepository()
         characterImageRepo = CharacterImageRepository()
+        charactersURLRepository = CharactersURLRepository()
     }
 
     fun fetchCharacters() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
+
+            // fetching characters API URL
+            val charactersURLStr =
+                charactersURLRepository.fetchCharactersURL()
+                    ?: return@launch //TODO error handling
+            println("test: url: $charactersURLStr")
+
+
+            // fetching characters
             val fetchedData = characterRepo.fetchCharacters() ?: return@launch //TODO error handling
             characters = fetchedData
-            liveCharacters.value = characters
+            viewModelScope.launch(Dispatchers.Main) {
+                liveCharacters.value = characters
+            }
 
-//            images = arrayOfNulls(fetchedData.size)
-//            liveImages.value = images
-
-            val indices = characters.indices
-
-            for (i in indices) {
-//                val urlStr = liveCharacters.value?.get(i)?.image_url ?: continue
-                val urlStr = characters[i].image_url
+            // fetching character images
+            for (i in characters.indices) {
                 viewModelScope.launch(Dispatchers.IO) {
+                    val urlStr = characters[i].image_url
                     println("test: start $i")
                     val image = characterImageRepo.fetchImage(urlStr)
                     println("test: finish $i")
                     viewModelScope.launch(Dispatchers.Main) {
-//                        images[i] = CharacterImage(image)
-//                        liveImages.value = images
                         characters[i].image = image
                         liveCharacters.value = characters
                     }
@@ -70,6 +70,7 @@ class CharactersViewModel : ViewModel() {
             override fun afterTextChanged(s: Editable?) {
                 liveCharacters.value = filterCharacters()
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         }
@@ -90,13 +91,8 @@ class CharactersViewModel : ViewModel() {
     }
 
     fun getCharacter(index: Int) = liveCharacters.value?.get(index)
-//    fun getImage(index: Int) = images[index]
-//    fun getCharacter(index: Int) = characters[index]
-//    fun getImage(index: Int) = images[index]
-
 
     fun getCharacterCount() = liveCharacters.value?.size ?: 0
-//    fun getCharacterCount() = characters.size
 
     fun onClickCharacter(character: Character) {
         clickLister?.onClickItem(character)

@@ -10,23 +10,25 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class CharactersRepository {
 
-    /**
-     * suspend is must be used because there is withContext within it
-     */
-    suspend fun fetchCharacters(): MutableList<Character>? {
+    //    /**
+//     * suspend is must be used because there is withContext within it
+//     */
+    fun fetchCharacters(): MutableList<Character>? {
 
-        /**
-         * use withContext(Dispatchers.IO) so that the API task is always done on Non-Main thread
-         */
-        return withContext(Dispatchers.IO) {
-            return@withContext try {
-                val response = executeAPI()
-                return@withContext extractCharacters(response.body()!!)
-            } catch (e: Exception) {
-                println("test: $e")
-                null
-            }
+//        /**
+//         * use withContext(Dispatchers.IO) so that the API task is always done on Non-Main thread
+//         */
+//        return withContext(Dispatchers.IO) {
+//            return@withContext try {
+        return try {
+            val response = executeAPI()
+//                return@withContext extractCharacters(response.body()!!)
+            return extractCharacters(response.body()!!)
+        } catch (e: Exception) {
+            println("test: $e")
+            null
         }
+//        }
     }
 
     private fun extractCharacters(entity: CharactersEntity): MutableList<Character> {
@@ -34,7 +36,8 @@ class CharactersRepository {
         val characterList: MutableList<Character> = mutableListOf()
 
         for (characterEntity in entity.results) {
-            val character = Character(characterEntity.id, characterEntity.name, characterEntity.image, null)
+            val character =
+                Character(characterEntity.id, characterEntity.name, characterEntity.image, null)
             characterList.add(character)
         }
 
